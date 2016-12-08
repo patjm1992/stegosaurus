@@ -158,7 +158,8 @@ def main():
         new_px_2 = (new_RBGs[3] new_RBGs[4], new_RBGs[5])
         new_px_3 = (new_RBGs[6], new_RBGs[7], B3)
 
-
+        # 'Write' new values to this image
+        img[i][j], img[i + 1][j + 1], img[i + 2][j + 2] = new_px_1, new_px_2, new_px_3
 
 
         i += 3
