@@ -98,8 +98,8 @@ def inject_bit(b, val):
         Put the bit, 'b' in the LSB position of 'val'.
 
             EX:
-                r_1 = 255 = 0b11111111
-                b = 0
+                val == 255 == 0b11111111
+                b == 0
 
                 ------
                 RESULT:
@@ -124,11 +124,18 @@ def main():
     msg = 'hi'
 
 
-    w = 500
-    h = 500
+
+
+    w = 25
+    h = 25
 
     # make a fake 'image'
     img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
+
+
+    for px in img:
+        print(px)
+
 
 
     i = 0
@@ -146,17 +153,17 @@ def main():
         R3, G3, B3 = px_3[0], px_3[1], px_3[2]
 
         RGBs = [R1, G1, B1, R2, G2, B2, R3, G3]
-        new_RGBS = [] # These will have the 'modified' R, G, B values, i.e., w/ the LSB changed
+        new_RGBs = [] # These will have the 'modified' R, G, B values, i.e., w/ the LSB changed
 
         bits = char_to_bits(c)
 
         for i in range(8):
-            new_RBGs.append(inject_bit(int(bits[i], 2), RGBs[i]))
+            new_RGBs.append(int(inject_bit(bits[i], RGBs[i], 2)))
 
         # Make new pixels
-        new_px_1 = (new_RBGs[0], new_RBGs[1], new_RBGs[2])
-        new_px_2 = (new_RBGs[3] new_RBGs[4], new_RBGs[5])
-        new_px_3 = (new_RBGs[6], new_RBGs[7], B3)
+        new_px_1 = (new_RGBs[0], new_RGBs[1], new_RGBs[2])
+        new_px_2 = (new_RGBs[3], new_RGBs[4], new_RGBs[5])
+        new_px_3 = (new_RGBs[6], new_RGBs[7], B3)
 
         # 'Write' new values to this image
         img[i][j], img[i + 1][j + 1], img[i + 2][j + 2] = new_px_1, new_px_2, new_px_3
@@ -166,39 +173,31 @@ def main():
         j += 3
 
 
+    print("\n----------- BEGIN NEW IMG -------------\n")
+
+
+    for px in img:
+        print(px)
+
+
+
 
 if __name__ == '__main__':
     main()
 
 
 '''
-def inject_msg(msg, img):
-    shape = image.shape
+
+
+    # Read an image file into a variable
+    img = cv2.imread('mouse.png')
+
+    # shape of an image --> returns a tuple of (rows, cols, channel)
+    shape = img.shape
+
+    # dimensions of the image
     height = shape[0]
     width = shape[1]
-
-    for i in range(0, width):
-        for j in range(0, height):
-
-        # R1, G1, B1
-        rgb_1 = img[i][j]
-        r_1, g_1, b_1 = rgb_1[0], rgb_1[1], rgb_1[2]
-
-
-        # R2, G2, B2
-        rgb_2 = img[i + 1][j + 1]
-        r_2, g_2, b_2 = rgb_2[0], rgb_2[1], rgb_2[2]
-
-
-        # R3, G3 (B3 not needed)
-        rgb_3 = img[i + 2][j + 2]
-        r_3, g_3 = rgb_3[0], rgb_3[1]
-
-        char_bits = char_to_bits(msg[i])
-
-
-
-
 
 # Read an image file into a variable
 img = cv2.imread('mouse.png')
