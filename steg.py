@@ -97,10 +97,8 @@ def inject_bit(b, val):
     elif (b == 0):
         return flip_lsb(val, b)
 
-def main():
+def encode(img):
 
-    # Read an image file into a variable
-    image = cv2.imread('mouse.png')
 
     # shape of an image --> returns a tuple of (rows, cols, channel)
     shape = image.shape
@@ -145,6 +143,26 @@ def main():
             if j == h -1:
                 print('')
 
+
+def decode():
+    pass
+
+
+def main():
+    '''
+        Flow:
+            python stega -f <img> -s "this text is to be hidden"
+
+            -or-
+
+            python stega -d <img> -o <output file w/ decoded message>
+    '''
+
+
+     # Read an image file into a variable
+    image = cv2.imread('mouse.png')
+
+    encode(image)
 
 
 if __name__ == '__main__':
