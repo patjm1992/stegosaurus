@@ -25,6 +25,8 @@ Extracting the text from the image:
 	value are done, convert it back to character, then add that character to the
 	result text you are seeking.
 '''
+def extract():
+    pass
 
 def char_to_bits(c):
     '''
@@ -50,6 +52,23 @@ def get_required_space(msg):
     pass
 
 def check_for_fit():
+    pass
+
+
+def flip_lsb(val):
+    '''
+        Flip the least significant bit of the value
+        0110000[1]
+                ^
+              (LSB)
+    '''
+    pass
+
+def lsb_to_zero(val):
+    return ()
+    pass
+
+def lsb_to_one(val):
     pass
 
 # Read an image file into a variable
