@@ -62,7 +62,21 @@ def lsb_to_zero(val):
 
 def lsb_to_one(val):
     b = ord(chr(val))
+
+    print("LSB -> 1", "b:", b, "bin(b | 1):", bin(b | 1))
+
     return bin(b | 1)
+
+def flip_lsb(val, b):
+    '''
+        If b == 0 --> make the LSB of 'val' a 1,
+        If b == 1 --> make the LSB of 'val' a 0
+
+        Return the modified bitstring
+    '''
+
+    return bin((val & ~1) | b)
+
 
 def produce_bitmask(val):
     '''
@@ -90,8 +104,70 @@ def access_lsb(val):
 
     return b & bitmask
 
+def inject_bit(b, val):
+    '''
+        Put the bit, 'b' in the LSB position of 'val'.
+
+            EX:
+                r_1 = 255 = 0b11111111
+                b = 0
+
+                ------
+                RESULT:
+                    0b11111110
+
+        Return the modified bitstring with the new bit 'injected'.
+    '''
+
+    lsb = access_lsb(val)
+    print("val:", bin(ord(chr(val))), "LSB:", lsb)
+
+    if (b == lsb):
+        # No work to be done
+        return
+    elif (b == 1):
+        print("Entered b == 1")
+        modified_bitstring = lsb_to_zero(val)
+        print("Modded:", modified_bitstring)
+        return modified_bitstring
+    elif (b == 0):
+        print("Entered b == 0")
+        modified_bitstring = lsb_to_one(val)
+        print("Modded:", modified_bitstring)
+        return modified_bitstring
+
+
+
 
 '''
+def inject_msg(msg, img):
+    shape = image.shape
+    height = shape[0]
+    width = shape[1]
+
+    for i in range(0, width):
+        for j in range(0, height):
+
+        # R1, G1, B1
+        rgb_1 = img[i][j]
+        r_1, g_1, b_1 = rgb_1[0], rgb_1[1], rgb_1[2]
+
+
+        # R2, G2, B2
+        rgb_2 = img[i + 1][j + 1]
+        r_2, g_2, b_2 = rgb_2[0], rgb_2[1], rgb_2[2]
+
+
+        # R3, G3 (B3 not needed)
+        rgb_3 = img[i + 2][j + 2]
+        r_3, g_3 = rgb_3[0], rgb_3[1]
+
+        char_bits = char_to_bits(msg[i])
+
+
+
+
+
 # Read an image file into a variable
 img = cv2.imread('mouse.png')
 
