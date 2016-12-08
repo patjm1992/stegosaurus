@@ -43,6 +43,12 @@ def char_to_bits(c):
     b_li = list(b)
 
 
+def msg_to_bits(msg):
+    bits = ''
+    for c in msg:
+        bits += "".join(char_to_bits(c))
+
+    return list(bits)
 
 
 def get_required_space(msg):
@@ -122,21 +128,48 @@ def inject_bit(b, val):
 
 def main():
 
-    msg = 'hi'
+    msg = 'hi dad hi im inside a jail asdfsadfasdfasdfadsflol'
 
 
 
 
-    w = 5
-    h = 5
+    w = 10
+    h = 10
 
     # make a fake 'image'
     img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
 
+    bits = msg_to_bits(msg)
+
+    curr = 0
+
+    for i in range(0, w):
+        for j in range(0, h):
+            for k in range(0, 3):
 
 
 
+                if curr == len(bits):
+                    print("Breaking")
+                    break
 
+                print("Current:", bits[curr], curr)
+
+                val = img[i][j][k]
+                b = int(bits[curr])
+                img[i][j] = list(img[i][j])
+                img[i][j][k] = int(inject_bit(b, val), 2)
+                img[i][j] = tuple(img[i][j])
+
+                curr += 1
+
+    for i in range(0, w):
+        for j in range(0, h):
+            print(img[i][j]),
+            if j == h -1:
+                print('')
+
+'''
 
     char_ct = len(msg)
     char_index = 0
@@ -167,15 +200,24 @@ def main():
             RGBs = [R1, G1, B1, R2, G2, B2, R3, G3]
             new_RGBs = [] # These will have the 'modified' R, G, B values, i.e., w/ the LSB changed
 
+            print(msg_li[char_index])
+
             bits = char_to_bits(msg_li[char_index])
 
-            for b in range(8):
-                new_RGBs.append(int(inject_bit(bits[b], RGBs[b]), 2))
+
+            print(type(bits[0]))
+
+
+            for b in range(len(bits) - 1):
+                new_RGBs.append(int(inject_bit(int(bits[b]), RGBs[b]), 2))
 
             # Make new pixels
-            new_px_1 = (new_RGBs[0], new_RGBs[1], new_RGBs[2])
-            new_px_2 = (new_RGBs[3], new_RGBs[4], new_RGBs[5])
-            new_px_3 = (new_RGBs[6], new_RGBs[7], B3)
+            for x in range(len(bits) - 1)
+                new_px_1 = (new_RGBs[0], new_RGBs[1], new_RGBs[2])
+
+                new_px_2 = (new_RGBs[3], new_RGBs[4], new_RGBs[5])
+
+                new_px_3 = (new_RGBs[6], new_RGBs[7], B3)
 
 
 
@@ -194,6 +236,8 @@ def main():
             print(img[i][j]),
             if j == h -1:
                 print('')
+
+'''
 
 '''
     for c in msg:
