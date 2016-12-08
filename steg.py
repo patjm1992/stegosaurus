@@ -77,18 +77,22 @@ def produce_bitmask(val):
 
     mask = '0b'
 
-    for i in range(bit_len - 2):
+    for i in range(bit_len - 3):
         mask += '0'
-        if i == (bit_len - 2):
-            mask += '1'
+
+    mask += '1'
+
+    return int(mask, 2)
 
 
 def access_lsb(val):
     b = ord(chr(val))
-    bitmask = produce_bitmask
+    bitmask = produce_bitmask(val)
 
     return b & bitmask
 
+
+'''
 # Read an image file into a variable
 img = cv2.imread('mouse.png')
 
@@ -99,28 +103,24 @@ shape = img.shape
 height = shape[0]
 width = shape[1]
 
+
 # Iterate through the image pixel-by-pixel
 for i in range(0, width):
 	for j in range(0, height):
 
-        try:
-
-            # R1, G1, B1
-            rgb_1 = img[i][j]
-    		r_1, g_1, b_1 = rgb_1[0], rgb_1[1], rgb_1[2]
+        # R1, G1, B1
+        rgb_1 = img[i][j]
+		r_1, g_1, b_1 = rgb_1[0], rgb_1[1], rgb_1[2]
 
 
-            # R2, G2, B2
-            rgb_2 = img[i + 1][j + 1]
-            r_2, g_2, b_2 = rgb_2[0], rgb_2[1], rgb_2[2]
+        # R2, G2, B2
+        rgb_2 = img[i + 1][j + 1]
+        r_2, g_2, b_2 = rgb_2[0], rgb_2[1], rgb_2[2]
 
 
-            # R3, G3 (B3 not needed)
-            rgb_3 = img[i + 2][j + 2]
-            r_3, g_3 = rgb_3[0], rgb_3[1]
-
-        except IndexError:
-            break
+        # R3, G3 (B3 not needed)
+        rgb_3 = img[i + 2][j + 2]
+        r_3, g_3 = rgb_3[0], rgb_3[1]
 
 
 
