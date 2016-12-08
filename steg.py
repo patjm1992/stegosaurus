@@ -124,37 +124,45 @@ def main():
     msg = 'hi'
 
 
-    w = 1000
-    h = 1000
+    w = 500
+    h = 500
 
     # make a fake 'image'
     img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
 
-'''
-    for i in range(w):
-        for j in range(h):
-            print(img[i][j])
-'''
 
     i = 0
     j = 0
 
     for c in msg:
-
         try:
             px_1, px_2, px_3 = img[i][j], img[i + 1][j + 1], img[i + 2][j + 2]
         except IndexError:
             break
 
-        # All the space we need for an 8-bit character
+        # All the space we need for an 8-bit character, as well as one surplus: B3
         R1, G1, B1 = px_1[0], px_1[1], px_1[2]
         R2, G2, B2 = px_2[0], px_2[1], px_2[2]
-        R3, G3 = px_3[0], px_3[1]
+        R3, G3, B3 = px_3[0], px_3[1], px_3[2]
+
+        RGBs = [R1, G1, B1, R2, G2, B2, R3, G3]
+        new_RGBS = [] # These will have the 'modified' R, G, B values, i.e., w/ the LSB changed
+
+        bits = char_to_bits(c)
+
+        for i in range(8):
+            new_RBGs.append(inject_bit(int(bits[i], 2), RGBs[i]))
+
+        # Make new pixels
+        new_px_1 = (new_RBGs[0], new_RBGs[1], new_RBGs[2])
+        new_px_2 = (new_RBGs[3] new_RBGs[4], new_RBGs[5])
+        new_px_3 = (new_RBGs[6], new_RBGs[7], B3)
 
 
 
-        i += 1
-        j += 1
+
+        i += 3
+        j += 3
 
 
 
