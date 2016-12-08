@@ -55,21 +55,39 @@ def check_for_fit():
     pass
 
 
-def flip_lsb(val):
-    '''
-        Flip the least significant bit of the value
-        0110000[1]
-                ^
-              (LSB)
-    '''
-    pass
-
 def lsb_to_zero(val):
-    return ()
-    pass
+    b = ord(chr(val))
+    return bin(b & ~1)
+
 
 def lsb_to_one(val):
-    pass
+    b = ord(chr(val))
+    return bin(b | 1)
+
+def produce_bitmask(val):
+    '''
+        Return a bitmask of the appropriate length, given val.
+
+        EX:
+            bits -> 0b10101010
+            mask -> 0b00000001
+    '''
+
+    bit_len = len(bin(ord(chr(val))))
+
+    mask = '0b'
+
+    for i in range(bit_len - 2):
+        mask += '0'
+        if i == (bit_len - 2):
+            mask += '1'
+
+
+def access_lsb(val):
+    b = ord(chr(val))
+    bitmask = produce_bitmask
+
+    return b & bitmask
 
 # Read an image file into a variable
 img = cv2.imread('mouse.png')
