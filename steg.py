@@ -140,14 +140,21 @@ def main():
     j = 0
 
     for c in msg:
-        px_1 = img[i][j]
-        R1, G1, B1 = px_1[0], px_1[1], px_1[2]
 
+        try:
+            px_1, px_2, px_3 = img[i][j], img[i + 1][j + 1], img[i + 2][j + 2]
+        except IndexError:
+            break
+
+        # All the space we need for an 8-bit character
+        R1, G1, B1 = px_1[0], px_1[1], px_1[2]
+        R2, G2, B2 = px_2[0], px_2[1], px_2[2]
+        R3, G3 = px_3[0], px_3[1]
 
 
 
         i += 1
-
+        j += 1
 
 
 
