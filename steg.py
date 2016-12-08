@@ -55,17 +55,6 @@ def check_for_fit():
     pass
 
 
-def lsb_to_zero(val):
-    b = ord(chr(val))
-    return bin(b & ~1)
-
-
-def lsb_to_one(val):
-    b = ord(chr(val))
-
-    print("LSB -> 1", "b:", b, "bin(b | 1):", bin(b | 1))
-
-    return bin(b | 1)
 
 def flip_lsb(val, b):
     '''
@@ -120,23 +109,50 @@ def inject_bit(b, val):
     '''
 
     lsb = access_lsb(val)
-    print("val:", bin(ord(chr(val))), "LSB:", lsb)
 
     if (b == lsb):
         # No work to be done
-        return
+        return bin(val)
     elif (b == 1):
-        print("Entered b == 1")
-        modified_bitstring = lsb_to_zero(val)
-        print("Modded:", modified_bitstring)
-        return modified_bitstring
+        return flip_lsb(val, b)
     elif (b == 0):
-        print("Entered b == 0")
-        modified_bitstring = lsb_to_one(val)
-        print("Modded:", modified_bitstring)
-        return modified_bitstring
+        return flip_lsb(val, b)
 
 
+def main():
+
+    msg = 'hi'
+
+
+    w = 1000
+    h = 1000
+
+    # make a fake 'image'
+    img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
+
+'''
+    for i in range(w):
+        for j in range(h):
+            print(img[i][j])
+'''
+
+    i = 0
+    j = 0
+
+    for c in msg:
+        px_1 = img[i][j]
+        R1, G1, B1 = px_1[0], px_1[1], px_1[2]
+
+
+
+
+        i += 1
+
+
+
+
+if __name__ == '__main__':
+    main()
 
 
 '''
