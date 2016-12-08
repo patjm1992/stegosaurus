@@ -32,17 +32,18 @@ def char_to_bits(c):
     '''
         Given a character, 'c', return an array of the bits that represent the
         ASCII representation of that character.
-        Example: 'a' --> 97 --> 01100001
+
+            EX:
+                'h' -> 104 -> '0b1101000' -> ['1', '1', '0', '1', '0', '0', '0']
     '''
 
-    bit_array = []
-    n_bits = 8
+    return list(bin(ord(c)))[2:]
 
-    for bit in range(n_bits - 1, -1, -1):
-        ascii_rep = ord(c)
-        bit_array.append((ascii_rep >> bit) & 1)
+    b = bin(ord(c))
+    b_li = list(b)
 
-    return bit_array
+
+
 
 def get_required_space(msg):
     '''
@@ -126,25 +127,80 @@ def main():
 
 
 
-    w = 25
-    h = 25
+    w = 5
+    h = 5
 
     # make a fake 'image'
     img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
 
 
-    for px in img:
-        print(px)
 
 
 
-    i = 0
-    j = 0
 
+    char_ct = len(msg)
+    char_index = 0
+    msg_li = list(msg)
+
+    done = False
+
+    for i in range(0, w):
+        if done == True:
+            break
+        for j in range(0, h):
+            if char_ct == 0:
+                print("BREAKING!")
+                done = True
+                break
+
+            try:
+                px_1, px_2, px_3 = img[i][j], img[i][j + 1], img[i][j + 1]
+            except IndexError:
+                break
+
+
+             # All the space we need for an 8-bit character, as well as one surplus: B3
+            R1, G1, B1 = px_1[0], px_1[1], px_1[2]
+            R2, G2, B2 = px_2[0], px_2[1], px_2[2]
+            R3, G3, B3 = px_3[0], px_3[1], px_3[2]
+
+            RGBs = [R1, G1, B1, R2, G2, B2, R3, G3]
+            new_RGBs = [] # These will have the 'modified' R, G, B values, i.e., w/ the LSB changed
+
+            bits = char_to_bits(msg_li[char_index])
+
+            for b in range(8):
+                new_RGBs.append(int(inject_bit(bits[b], RGBs[b]), 2))
+
+            # Make new pixels
+            new_px_1 = (new_RGBs[0], new_RGBs[1], new_RGBs[2])
+            new_px_2 = (new_RGBs[3], new_RGBs[4], new_RGBs[5])
+            new_px_3 = (new_RGBs[6], new_RGBs[7], B3)
+
+
+
+
+            # 'Write' new values to this image
+            img[i][j], img[i][j + 1], img[i][j + 2] = new_px_1, new_px_2, new_px_3
+
+
+
+            char_index += 1
+            char_ct -= 1
+
+
+    for i in range(0, w):
+        for j in range(0, h):
+            print(img[i][j]),
+            if j == h -1:
+                print('')
+
+'''
     for c in msg:
         try:
             px_1, px_2, px_3 = img[i][j], img[i + 1][j + 1], img[i + 2][j + 2]
         except IndexError:
+            "IndexError"
             break
 
         # All the space we need for an 8-bit character, as well as one surplus: B3
@@ -157,8 +213,8 @@ def main():
 
         bits = char_to_bits(c)
 
-        for i in range(8):
-            new_RGBs.append(int(inject_bit(bits[i], RGBs[i], 2)))
+        for b in range(8):
+            new_RGBs.append(int(inject_bit(bits[b], RGBs[b]), 2))
 
         # Make new pixels
         new_px_1 = (new_RGBs[0], new_RGBs[1], new_RGBs[2])
@@ -170,15 +226,20 @@ def main():
 
 
         i += 3
-        j += 3
+        i = i % (w - 1)
+        j += 1
+        j = j % (h - 1)
+
+        print("img[" + str(i) + "][" + str(j) + "]")
 
 
     print("\n----------- BEGIN NEW IMG -------------\n")
 
 
+
     for px in img:
         print(px)
-
+'''
 
 
 
