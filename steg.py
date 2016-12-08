@@ -75,11 +75,10 @@ def produce_bitmask(val):
 
     bit_len = len(bin(ord(chr(val))))
 
+    # Build the mask as a string
     mask = '0b'
-
     for i in range(bit_len - 3):
         mask += '0'
-
     mask += '1'
 
     return int(mask, 2)
