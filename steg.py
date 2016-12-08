@@ -27,32 +27,64 @@ Extracting the text from the image:
 '''
 
 def char_to_bits(c):
-	return c
+    '''
+        Given a character, 'c', return an array of the bits that represent the
+        ASCII representation of that character.
+        Example: 'a' --> 97 --> 01100001
+    '''
 
+    bit_array = []
+    n_bits = 8
 
+    for bit in range(n_bits - 1, -1, -1):
+        ascii_rep = ord(c)
+        bit_array.append((ascii_rep >> bit) & 1)
 
+    return bit_array
 
+def get_required_space(msg):
+    '''
+        Given a 'msg', return the number of pixels that will have to be accessed
+        in order to hide this message.
+    '''
+    pass
 
-print(char_to_bits('a')
+def check_for_fit():
+    pass
 
-
-'''
 # Read an image file into a variable
 img = cv2.imread('mouse.png')
 
 # shape of an image --> returns a tuple of (rows, cols, channel)
 shape = img.shape
 
-# dimentsions of the image
+# dimensions of the image
 height = shape[0]
 width = shape[1]
 
 # Iterate through the image pixel-by-pixel
 for i in range(0, width):
 	for j in range(0, height):
-		rgb = img[i][j]
-		r, g, b = rgb[0], rgb[1], rgb[2]
-		print("R", r, "G", g, "B", b)
+
+        try:
+
+            # R1, G1, B1
+            rgb_1 = img[i][j]
+    		r_1, g_1, b_1 = rgb_1[0], rgb_1[1], rgb_1[2]
+
+
+            # R2, G2, B2
+            rgb_2 = img[i + 1][j + 1]
+            r_2, g_2, b_2 = rgb_2[0], rgb_2[1], rgb_2[2]
+
+
+            # R3, G3 (B3 not needed)
+            rgb_3 = img[i + 2][j + 2]
+            r_3, g_3 = rgb_3[0], rgb_3[1]
+
+        except IndexError:
+            break
+
 
 
 '''
