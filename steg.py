@@ -1,5 +1,5 @@
 import cv2
-import numpy as np
+import numpy
 import argparse
 
 '''
@@ -101,7 +101,7 @@ def encode(img):
 
 
     # shape of an image --> returns a tuple of (rows, cols, channel)
-    shape = image.shape
+    shape = img.shape
 
     # dimensions of the image
     height = shape[0]
@@ -109,23 +109,23 @@ def encode(img):
 
     msg = 'hi'
 
-    w = 10
-    h = 10
 
     # make a fake 'image'
-    img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
+    # w = 10
+    # h = 10
+    #img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
 
     bits = msg_to_bits(msg)
 
     curr = 0
 
-    for i in range(0, w):
-        for j in range(0, h):
+    for i in range(0, width):
+        for j in range(0, height):
             for k in range(0, 3):
                 if curr == len(bits):
                     break
 
-                print("Current:", bits[curr], curr)
+                #print("Current:", bits[curr], curr)
 
                 val = img[i][j][k]
                 b = int(bits[curr])
@@ -136,16 +136,25 @@ def encode(img):
                 img[i][j] = tuple(img[i][j])
 
                 curr += 1
-
-    for i in range(0, w):
-        for j in range(0, h):
+'''
+    for i in range(0, width):
+        for j in range(0, height):
             print(img[i][j]),
-            if j == h -1:
+            if j == height - 1:
                 print('')
-
+'''
 
 def decode():
-    pass
+
+      # shape of an image --> returns a tuple of (rows, cols, channel)
+    shape = img.shape
+
+    # dimensions of the image
+    height = shape[0]
+    width = shape[1]
+
+    # Will hold the bits of the message as we collect them
+    bits = ''
 
 
 def main():
@@ -162,7 +171,10 @@ def main():
      # Read an image file into a variable
     image = cv2.imread('mouse.png')
 
-    encode(image)
+    if image is not None:
+        encode(image)
+    else:
+        print("Error")
 
 
 if __name__ == '__main__':
