@@ -1,8 +1,8 @@
-#stegosaurus
+# stegosaurus
 
-A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels in your image.
+A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels of an image.
 
-# Usage
+## Usage
 
 The CLI is pretty simple. You're either hiding a message or you're extracting a message from an image (the message will be printed to STDOUT).
 
@@ -26,7 +26,7 @@ optional arguments:
 
 ```
 
-# Installation
+## Installation
 
 OpenCV-Python is a dependency. Get it [here.](http://docs.opencv.org/2.4/doc/tutorials/introduction/table_of_content_introduction/table_of_content_introduction.html)
 
@@ -56,6 +56,6 @@ $
 
 Since only the least significant bit of each pixel is used to hold the bits that comprise your message, the altered pixels in the modified image are imperceptible to the human eye.
 
-# To-Do
+####  To-Do
 
 Right now the program doesn't check ahead of time if a message will fit in your image (it probably will unless your image is really tiny or you're hiding a long novel, or something). It'd be simple to add though and I may tack that on eventually.
