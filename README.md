@@ -40,7 +40,6 @@ Loading image 'mouse.png'... image loaded.
 Encoding message 'ayy lmao' in image...
 Bit representation: 011000010111100101111001001000000110110001101101011000010110111100000000
 Message hidden.
-$
 ```
 
 _Extracting a message:_
@@ -49,7 +48,6 @@ $ python steg.py -f encoded.png
 Loading image 'encoded.png'... image loaded.
 Extracting message from image... got it.
 MESSAGE: 'ayy lmao'
-$
 ```
 
 Since only the least significant bit of each pixel is used to hold the bits that comprise your message, the altered pixels in the modified image are imperceptible to the human eye.
