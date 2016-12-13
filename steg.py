@@ -1,12 +1,10 @@
 import cv2
 import numpy
 import argparse
-import time
 
 '''
-    Quick prototype of a steganography program.
+    A CLI steganography tool.
 '''
-
 
 def char_to_bits(c):
     '''
@@ -20,9 +18,13 @@ def char_to_bits(c):
     return list(bin(ord(c)))[2:]
 
 def msg_to_bits(msg):
+    '''
+        Given a string 'msg', return a string representation of the binary
+        representation of that string.
+    '''
+
     bits = ''
     for c in msg:
-        #print("Character: " + c)
         if len(bin(ord(c))) == 8:
             bits += '00'
         elif len(bin(ord(c))) == 9:
@@ -38,9 +40,15 @@ def msg_to_bits(msg):
     return bits
 
 def bits_to_msg(bits):
+    '''
+        The opposite of the 'msg_to_bits' function.
+    '''
+
     char_list = []
     char = ''
     i = 0
+
+    # Build a list where each item is an 8-bit ASCII character (1 padding bit)
     for b in bits:
         char += b
         i += 1
@@ -55,7 +63,6 @@ def bits_to_msg(bits):
         msg += chr(int(char_list[i], 2))
 
     return msg
-
 
 def flip_lsb(val, b):
     '''
@@ -87,6 +94,10 @@ def produce_bitmask(val):
     return int(mask, 2)
 
 def access_lsb(val):
+    '''
+        Given a value 'val', such as 255, return the least significant bit.
+    '''
+
     b = ord(chr(val))
     bitmask = produce_bitmask(val)
 
@@ -118,7 +129,11 @@ def inject_bit(b, val):
         return flip_lsb(val, b)
 
 def encode(img, msg):
+    '''
+        Given an image and a message, encode that message in the image.
 
+        Return the modified image.
+    '''
 
     # shape of an image --> returns a tuple of (rows, cols, channel)
     shape = img.shape
@@ -126,11 +141,6 @@ def encode(img, msg):
     # dimensions of the image
     height = shape[0]
     width = shape[1]
-
-    # make a fake 'image'
-    # w = 10
-    # h = 10
-    #img = [[(255, 255, 255) for x in range(w)] for y in range(h)]
 
     bits = msg_to_bits(msg)
 
@@ -145,8 +155,6 @@ def encode(img, msg):
                 if curr == len(bits):
                     break
 
-                #print("Current:", bits[curr], curr)
-
                 val = img[i][j][k]
                 b = int(bits[curr])
 
@@ -159,20 +167,15 @@ def encode(img, msg):
 
     print("Message hidden.")
     return img
-'''
-    for i in range(0, width):
-        for j in range(0, height):
-            print(img[i][j]),
-            if j == height - 1:
-                print('')
-'''
 
 def decode(img):
+    '''
+        Given an image (that supposedly has had steganography performed on it),
+        return the message that is hidden within.
+    '''
 
-      # shape of an image --> returns a tuple of (rows, cols, channel)
     shape = img.shape
 
-    # dimensions of the image
     height = shape[0]
     width = shape[1]
 
@@ -185,30 +188,13 @@ def decode(img):
             px = img[i][j]
             for val in px:
                 lsb = access_lsb(val)
-#                print(lsb)
-#               time.sleep(1)
                 bits += str(lsb)
-              #  print(bits)
-
+                # Check for the flag (8 zero bits)
                 if bits[-8:] == '00000000':
                     print("got it.")
                     return bits_to_msg(bits)
 
-
-
-#            time.sleep(1)
-
-
 def main():
-    '''
-        Flow:
-            python stega -f <img> -s "this text is to be hidden"
-
-            -or-
-
-            python stega -d <img> -o <output file w/ decoded message>
-    '''
-
     descrip = 'A steganography tool written in Python.'
     img_help = 'The .png file you would like to either hide a message in or extract a message from.'
     msg_help = 'The message you would like to hide.'
@@ -219,7 +205,7 @@ def main():
     parser.add_argument('-o', '--output-img', help=out_help)
     args = parser.parse_args()
 
-     # Read an image file into a variable
+    # Read an image file into a variable
     file_name = args.img_file
 
     print("Loading image '" + file_name + "'..."),
