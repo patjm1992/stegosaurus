@@ -221,7 +221,6 @@ def main():
     else:
         print("Error loading image.")
 
-
 if __name__ == '__main__':
     main()
 
