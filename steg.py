@@ -8,12 +8,6 @@ import time
 '''
 
 
-def extract():
-    '''
-        to-do
-    '''
-    pass
-
 def char_to_bits(c):
     '''
         Given a character, 'c', return an array of the bits that represent the
@@ -28,7 +22,10 @@ def char_to_bits(c):
 def msg_to_bits(msg):
     bits = ''
     for c in msg:
+        print("Character: " + c)
+        bits += '0'
         bits += "".join(char_to_bits(c))
+        print("Binary representation: " + bits)
 
     bits = list(bits)
 
@@ -121,6 +118,7 @@ def encode(img):
     curr = 0
 
     print("Encoding message '" + msg + "' in image..." )
+    print("Bit representation: " + "".join(bits))
 
     for i in range(0, width):
         for j in range(0, height):
@@ -133,7 +131,7 @@ def encode(img):
                 val = img[i][j][k]
                 b = int(bits[curr])
 
-                # Major hack, fam
+                # Major hack, fam -- 'temporary workaroud'
                 img[i][j] = list(img[i][j])
                 img[i][j][k] = int(inject_bit(b, val), 2)
                 img[i][j] = tuple(img[i][j])
@@ -163,9 +161,23 @@ def decode(img):
 
     for i in range(0, width):
         for j in range(0, height):
-            rgb = img[i][j]
-            print(rgb)
-            time.sleep(1)
+            px = img[i][j]
+            for val in px:
+                print(val)
+                lsb = access_lsb(val)
+                print(lsb)
+#               time.sleep(1)
+                bits += str(lsb)
+                print(bits)
+                time.sleep(1)
+                if bits[-8:] == '00000000':
+                    print("Found end of message flag.")
+                    break
+                else:
+                    print("here's bits[-8:]", bits[-8:])
+
+
+#            time.sleep(1)
 
 
 def main():
