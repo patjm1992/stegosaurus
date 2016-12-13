@@ -22,10 +22,12 @@ def char_to_bits(c):
 def msg_to_bits(msg):
     bits = ''
     for c in msg:
-        print("Character: " + c)
-        bits += '0'
+        #print("Character: " + c)
+        if len(bin(ord(c))) == 8:
+            bits += '00'
+        elif len(bin(ord(c))) == 9:
+            bits += '0'
         bits += "".join(char_to_bits(c))
-        print("Binary representation: " + bits)
 
     bits = list(bits)
 
@@ -34,6 +36,26 @@ def msg_to_bits(msg):
         bits.append('0')
 
     return bits
+
+def bits_to_msg(bits):
+    char_list = []
+    char = ''
+    i = 0
+    for b in bits:
+        char += b
+        i += 1
+        if i == 8:
+            char_list.append(char)
+            i = 0
+            char = ''
+
+    msg = ''
+
+    for i in range(0, len(char_list)):
+        msg += chr(int(char_list[i], 2))
+
+    return msg
+
 
 def flip_lsb(val, b):
     '''
@@ -95,7 +117,7 @@ def inject_bit(b, val):
     elif (b == 0):
         return flip_lsb(val, b)
 
-def encode(img):
+def encode(img, msg):
 
 
     # shape of an image --> returns a tuple of (rows, cols, channel)
@@ -104,9 +126,6 @@ def encode(img):
     # dimensions of the image
     height = shape[0]
     width = shape[1]
-
-    msg = 'hi'
-
 
     # make a fake 'image'
     # w = 10
@@ -138,7 +157,8 @@ def encode(img):
 
                 curr += 1
 
-    print("Message hidden!")
+    print("Message hidden.")
+    return img
 '''
     for i in range(0, width):
         for j in range(0, height):
@@ -159,22 +179,21 @@ def decode(img):
     # Will hold the bits of the message as we collect them
     bits = ''
 
+    print("Extracting message from image..."),
     for i in range(0, width):
         for j in range(0, height):
             px = img[i][j]
             for val in px:
-                print(val)
                 lsb = access_lsb(val)
-                print(lsb)
+#                print(lsb)
 #               time.sleep(1)
                 bits += str(lsb)
-                print(bits)
-                time.sleep(1)
+              #  print(bits)
+
                 if bits[-8:] == '00000000':
-                    print("Found end of message flag.")
-                    break
-                else:
-                    print("here's bits[-8:]", bits[-8:])
+                    print("got it.")
+                    return bits_to_msg(bits)
+
 
 
 #            time.sleep(1)
@@ -190,19 +209,31 @@ def main():
             python stega -d <img> -o <output file w/ decoded message>
     '''
 
+    descrip = 'A steganography tool written in Python.'
+    img_help = 'The .png file you would like to either hide a message in or extract a message from.'
+    msg_help = 'The message you would like to hide.'
+    out_help = 'The output file name of the image with the message hidden inside of it.'
+    parser = argparse.ArgumentParser(description=descrip)
+    parser.add_argument('-f', '--img-file', help=img_help, required=True)
+    parser.add_argument('-m', '--msg', help=msg_help)
+    parser.add_argument('-o', '--output-img', help=out_help)
+    args = parser.parse_args()
 
      # Read an image file into a variable
-    file_name = 'mouse.png'
+    file_name = args.img_file
 
-    print("Loading image '" + file_name + "'...")
+    print("Loading image '" + file_name + "'..."),
     image = cv2.imread(file_name)
-    print("Image loaded.")
 
     if image is not None:
-        encode(image)
-        decode(image)
+        print("image loaded.")
+        if args.msg is not None:
+            encoded_img = encode(image, args.msg)
+            cv2.imwrite(args.output_img, encoded_img)
+        else:
+            print("MESSAGE: '" + decode(image) + "'")
     else:
-        print("Error")
+        print("Error loading image.")
 
 
 if __name__ == '__main__':
