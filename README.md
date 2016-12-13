@@ -76,4 +76,4 @@ Since only the least significant bit of each pixel is used to hold the bits that
 
 ##  To-Do
 
-Right now the program doesn't check ahead of time if a message will fit in your image (it probably will unless your image is really tiny or you're hiding a long novel, or something). It'd be simple to add though and I may tack that on eventually.
+Right now the program doesn't check ahead of time if a message will fit in your image (it probably will unless your image is really tiny or you're hiding a long novel, or something). It'd be simple to add though and I may tack that on eventually. Or someone else can.
