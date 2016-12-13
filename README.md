@@ -1,6 +1,6 @@
 # stegosaurus
 
-A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels of an image.
+A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels of an image. **Note**: I've only tested this on .png files.
 
 ## Usage
 
@@ -56,6 +56,6 @@ $
 
 Since only the least significant bit of each pixel is used to hold the bits that comprise your message, the altered pixels in the modified image are imperceptible to the human eye.
 
-####  To-Do
+##  To-Do
 
 Right now the program doesn't check ahead of time if a message will fit in your image (it probably will unless your image is really tiny or you're hiding a long novel, or something). It'd be simple to add though and I may tack that on eventually.
