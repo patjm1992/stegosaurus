@@ -1,6 +1,6 @@
 #stegosaurus
 
-A CLI steganography tool written in Python. It packs your message in the least significant bits of the pixels in your image.
+A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels in your image.
 
 # Usage
 
