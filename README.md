@@ -30,8 +30,10 @@ optional arguments:
 
 OpenCV-Python is a dependency. Get it [here.](http://docs.opencv.org/2.4/doc/tutorials/introduction/table_of_content_introduction/table_of_content_introduction.html)
 
-`git clone https://github.com/patjm1992/stegosaurus
-cd stegosaurus`
+```bash
+$ git clone https://github.com/patjm1992/stegosaurus
+$ cd stegosaurus
+```
 
 _Hiding a message:_
 ```bash
