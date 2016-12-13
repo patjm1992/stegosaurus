@@ -1,5 +1,15 @@
 # stegosaurus
 
+```
+             /\
+           /\  /\
+       /\/\      /\
+ |||..^            -^^o
+ ------__\ /---\ /--~ 
+          | |    ||
+          --*    -*
+```
+
 A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels of an image. **Note**: I've only tested this on .png files.
 
 ## Usage
