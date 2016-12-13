@@ -33,8 +33,7 @@ OpenCV-Python is a dependency. Get it [here.](http://docs.opencv.org/2.4/doc/tut
 `git clone https://github.com/patjm1992/stegosaurus
 cd stegosaurus`
 
-Hiding a message:
-
+_Hiding a message:_
 ```bash
 $ python steg.py -f mouse.png -m "ayy lmao" -o encoded.png
 Loading image 'mouse.png'... image loaded.
@@ -44,8 +43,7 @@ Message hidden.
 $
 ```
 
-Extracting a message:
-
+_Extracting a message:_
 ```bash
 $ python steg.py -f encoded.png                           
 Loading image 'encoded.png'... image loaded.
