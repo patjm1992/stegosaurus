@@ -1,13 +1,23 @@
 # stegosaurus
 
 ```
-             /\
-           /\  /\
-       /\/\      /\
- |||..^            -^^o
- ------__\ /---\ /--~ 
-          | |    ||
-          --*    -*
+              
+                         .       .
+                        / `.   .' \
+                .---.  <    > <    >  .---.
+                |    \  \ - ~ ~ - /  /    |
+                 ~-..-~             ~-..-~
+             \~~~\.'                    `./~~~/
+              \__/                        \__/
+               /                  .-    .  \
+        _._ _.-    .-~ ~-.       /       }   \/~~~/
+    _.-'q  }~     /       }     {        ;    \__/
+   {'__,  /      (       /      {       /      `. ,~~|   .     .
+    `''''='~~-.__(      /_      |      /- _      `..-'   \\   //
+                / \   =/  ~~--~~{    ./|    ~-.     `-..__\\_//_.-'
+               {   \  +\         \  =\ (        ~ - . _ _ _..---~
+               |  | {   }         \   \_\
+              '---.o___,'       .o___,'       - Stegosaurus
 ```
 
 A CLI [steganography tool](https://en.wikipedia.org/wiki/Steganography) written in Python. It packs your message in the least significant bits of the pixels of an image. **Note**: I've only tested this on .png files.
