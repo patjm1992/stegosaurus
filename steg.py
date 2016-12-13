@@ -1,6 +1,7 @@
 import cv2
 import numpy
 import argparse
+import time
 
 '''
     Quick prototype of a steganography program.
@@ -119,6 +120,8 @@ def encode(img):
 
     curr = 0
 
+    print("Encoding message '" + msg + "' in image..." )
+
     for i in range(0, width):
         for j in range(0, height):
             for k in range(0, 3):
@@ -136,6 +139,8 @@ def encode(img):
                 img[i][j] = tuple(img[i][j])
 
                 curr += 1
+
+    print("Message hidden!")
 '''
     for i in range(0, width):
         for j in range(0, height):
@@ -144,7 +149,7 @@ def encode(img):
                 print('')
 '''
 
-def decode():
+def decode(img):
 
       # shape of an image --> returns a tuple of (rows, cols, channel)
     shape = img.shape
@@ -155,6 +160,12 @@ def decode():
 
     # Will hold the bits of the message as we collect them
     bits = ''
+
+    for i in range(0, width):
+        for j in range(0, height):
+            rgb = img[i][j]
+            print(rgb)
+            time.sleep(1)
 
 
 def main():
@@ -169,10 +180,15 @@ def main():
 
 
      # Read an image file into a variable
-    image = cv2.imread('mouse.png')
+    file_name = 'mouse.png'
+
+    print("Loading image '" + file_name + "'...")
+    image = cv2.imread(file_name)
+    print("Image loaded.")
 
     if image is not None:
         encode(image)
+        decode(image)
     else:
         print("Error")
 
