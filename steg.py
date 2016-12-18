@@ -220,6 +220,8 @@ def main():
             print("MESSAGE: '" + decode(image) + "'")
     else:
         print("Error loading image.")
+        quit()
+
 
 if __name__ == '__main__':
     main()
